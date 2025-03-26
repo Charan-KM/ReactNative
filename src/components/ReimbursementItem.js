@@ -5,7 +5,7 @@ import { getMerchantAvatar } from "../utils/Avatar";
 
 const STATUS_COLORS = {
   Draft: "text-gray-500",
-  "Approval Pending": "text-orange-500",
+  "Approval Pending": "text-yellow-500",
   Approved: "text-green-500",
 };
 
