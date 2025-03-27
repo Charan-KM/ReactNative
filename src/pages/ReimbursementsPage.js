@@ -14,13 +14,13 @@ const ReimbursementsPage = () => {
   const route = useRoute();
 
   useEffect(() => {
-    if (route.params?.newClaim) {
+    if (route?.params?.newClaim) {
       setReimbursements((prevClaims) => [route.params.newClaim, ...prevClaims]);
     }
-  }, [route.params?.newClaim]);
+  }, [route?.params?.newClaim]);
 
   const filteredData = reimbursements.filter((item) =>
-    item.merchant.toLowerCase().includes(searchQuery.toLowerCase())
+    item?.merchant?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -34,10 +34,10 @@ const ReimbursementsPage = () => {
         onChangeText={setSearchQuery}
       />
 
-      {filteredData.length > 0 ? (
+      {!!filteredData?.length ? (
         <FlatList
           data={filteredData}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item?.id?.toString()}
           renderItem={({ item }) => <ReimbursementItem item={item} />}
           contentContainerStyle={tw`pb-20`}
         />

@@ -24,7 +24,7 @@ const getMerchantAvatar = (merchant) => {
 };
 
 const ReimbursementItem = ({ item }) => {
-  const { initials, backgroundColor } = getMerchantAvatar(item.merchant);
+  const { initials, backgroundColor } = getMerchantAvatar(item?.merchant);
 
   return (
     <View style={tw`flex-row items-center p-4 border-b border-gray-200`}>
@@ -33,15 +33,15 @@ const ReimbursementItem = ({ item }) => {
       </View>
 
       <View style={tw`flex-1 ml-3`}>
-        <Text style={tw`text-lg font-semibold`}>{item.merchant}</Text>
-        <Text style={tw`${STATUS_COLORS[item.status]} text-xs mt-1`}>
-          {item.status}
+        <Text style={tw`text-lg font-semibold`}>{item?.merchant}</Text>
+        <Text style={tw`${STATUS_COLORS[item?.status]} text-xs mt-1`}>
+          {item?.status}
         </Text>
       </View>
 
       <View style={tw`items-end`}>
         <Text style={tw`text-lg font-bold`}>
-          {item.amount} {item.currency}
+          {item?.amount} {item?.currency}
         </Text>
       </View>
     </View>
