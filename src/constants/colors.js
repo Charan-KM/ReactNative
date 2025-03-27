@@ -12,6 +12,4 @@ const COLORS = [
     "rgb(2, 5, 141)",
   ];
   
-  const getRandomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
-  
-  export { COLORS, getRandomColor };
+  export { COLORS };

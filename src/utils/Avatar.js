@@ -1,4 +1,6 @@
-import { getRandomColor } from "../constants/colors";
+import { COLORS } from "../constants/colors";
+
+const getRandomColor = () => COLORS[Math.floor(Math.random() * COLORS.length)];
 
 const getInitials = (name) => {
   if (!name) return "";
@@ -14,4 +16,4 @@ const getMerchantAvatar = (merchant) => {
   };
 };
 
-export { getInitials, getMerchantAvatar };
+export { getRandomColor, getInitials, getMerchantAvatar };
