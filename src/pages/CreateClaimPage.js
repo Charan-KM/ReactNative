@@ -5,6 +5,7 @@ import DropDownPicker from "react-native-dropdown-picker";
 import * as ImagePicker from "expo-image-picker";
 import tw from "tailwind-react-native-classnames";
 import { MERCHANTS, CURRENCIES } from "../constants/dropdownOptions";
+import { Feather } from "@expo/vector-icons";
 
 const CreateClaimPage = () => {
   const navigation = useNavigation();
@@ -56,8 +57,21 @@ const CreateClaimPage = () => {
   };
 
   return (
-    <View style={tw`flex-1 p-5 bg-white`}>
-      <Text style={tw`text-2xl font-bold mb-5`}>Create Claim</Text>
+    <View style={tw`flex-1 bg-white p-5`}>
+      <Text style={tw`text-2xl font-bold mb-1`}>Create claim</Text>
+      <Text style={tw`text-gray-500 mb-5`}>Reimbursement</Text>
+
+<View style={tw`border-2 border-gray-300 border-dashed rounded-lg p-5 mb-4 items-center`}>
+  {receipt ? (
+    <Image source={{ uri: receipt }} style={tw`w-32 h-32 rounded-lg`} />
+  ) : (
+    <TouchableOpacity onPress={pickReceipt} style={tw`items-center`}>
+      <Feather name="upload" size={24} color="gray" />
+      <Text style={tw`text-blue-600 font-semibold mt-1`}>Upload receipts</Text>
+      <Text style={tw`text-gray-400 text-xs`}>PNG, JPG, PDF up to 5 MB</Text>
+    </TouchableOpacity>
+  )}
+</View>
 
       <DropDownPicker
         open={merchantOpen}
@@ -65,10 +79,22 @@ const CreateClaimPage = () => {
         items={MERCHANTS}
         setOpen={setMerchantOpen}
         setValue={setMerchant}
-        placeholder="Select Merchant"
+        placeholder="Merchant"
         style={tw`mb-3 border border-gray-300 rounded-lg`}
         containerStyle={tw`z-50`}
         zIndex={1000}
+      />
+
+      <DropDownPicker
+        open={currencyOpen}
+        value={currency}
+        items={CURRENCIES}
+        setOpen={setCurrencyOpen}
+        setValue={setCurrency}
+        placeholder="Currency"
+        style={tw`mb-3 border border-gray-300 rounded-lg`}
+        containerStyle={tw`z-40`}
+        zIndex={900}
       />
 
       <TextInput
@@ -79,27 +105,29 @@ const CreateClaimPage = () => {
         onChangeText={setAmount}
       />
 
-      <DropDownPicker
-        open={currencyOpen}
-        value={currency}
-        items={CURRENCIES}
-        setOpen={setCurrencyOpen}
-        setValue={setCurrency}
-        placeholder="Select Currency"
-        style={tw`mb-3 border border-gray-300 rounded-lg`}
-        containerStyle={tw`z-40`}
-        zIndex={900}
-      />
+      <View style={tw`flex-row items-center border border-gray-300 rounded-lg p-3`}>
+        <Text style={tw`flex-1 text-gray-500`}>Transaction date</Text>
+        <Feather name="calendar" size={20} color="gray" />
+      </View>
 
-      <TouchableOpacity onPress={pickReceipt} style={tw`bg-gray-200 p-3 rounded-lg items-center mb-3`}>
-        <Text style={tw`text-gray-700`}>{receipt ? "Receipt Selected" : "Upload Receipt"}</Text>
-      </TouchableOpacity>
+      <View style={tw`flex-row justify-between mt-6`}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={tw`border border-gray-400 px-6 py-3 rounded-lg`}>
+          <Text style={tw`text-gray-600`}>Cancel</Text>
+        </TouchableOpacity>
 
-      {receipt && <Image source={{ uri: receipt }} style={tw`w-24 h-24 self-center mb-3`} />}
-
-      <TouchableOpacity onPress={handleCreateClaim} style={tw`bg-blue-600 p-4 rounded-lg items-center`}>
-        <Text style={tw`text-white font-bold`}>Create Claim</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleCreateClaim}
+          disabled={!merchant || !amount || !currency || !receipt}
+          style={[
+            tw`px-6 py-3 rounded-lg`,
+            !merchant || !amount || !currency || !receipt ? tw`bg-gray-300` : tw`bg-blue-600`,
+          ]}
+        >
+          <Text style={tw`text-white font-bold`}>Create claim</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
